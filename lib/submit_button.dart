@@ -24,7 +24,7 @@ class SubmitButton extends StatelessWidget {
             onPressed: onPressed,
             child: Center(
               child: Text(
-                'Submit',
+                'Xử lý',
                 style: AppStyles.f16m().copyWith(color: Colors.white),
               ),
             ),
