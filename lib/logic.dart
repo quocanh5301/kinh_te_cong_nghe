@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class Logic {
@@ -82,17 +84,25 @@ class Logic {
                   codeLanguageDifficulty * (-1))));
 
   static double _calculateESPoinst({required double si}) {
+    double value = 0;
     if (si <= 0) {
-      return 0;
-    } else if (si > 0) {
-      return 0.05;
-    } else if (si > 1) {
-      return 0.1;
-    } else if (si > 2) {
-      return 0.6;
-    } else {
-      return 1;
+      value = 0;
     }
+    if (si > 0) {
+      value = 0.05;
+    }
+    if (si > 1) {
+      value = 0.1;
+    }
+    if (si > 2) {
+      value = 0.6;
+    }
+    if (si > 3) {
+      value = 1;
+    }
+    // debugPrint('si: $si');
+    // debugPrint('value: $value');
+    return value;
   }
 
   static double _calculateWorkTimeInterpolation({
@@ -105,21 +115,20 @@ class Logic {
     required double useParttimeEmployee,
     required double codeLanguageDifficulty,
   }) {
-    final esPoints = _calculateESPoinst(si: rupKnowledge) +
-        _calculateESPoinst(si: similarAppExperiences) +
+    final esPoints = _calculateESPoinst(si: rupKnowledge * 1.5) +
+        _calculateESPoinst(si: similarAppExperiences * 0.5) +
         _calculateESPoinst(si: oopExperiences) +
-        _calculateESPoinst(si: leaderShip) +
+        _calculateESPoinst(si: leaderShip * 0.5) +
         _calculateESPoinst(si: activeness) +
-        _calculateESPoinst(si: requirementStability) +
-        _calculateESPoinst(si: useParttimeEmployee) +
-        _calculateESPoinst(si: codeLanguageDifficulty);
-
-    if (esPoints < 1) {
-      return 48;
+        _calculateESPoinst(si: requirementStability * 2) +
+        _calculateESPoinst(si: useParttimeEmployee * (-1)) +
+        _calculateESPoinst(si: codeLanguageDifficulty * (-1));
+    if (esPoints >= 3) {
+      return 20;
     } else if (esPoints >= 1) {
       return 32;
     } else {
-      return 20;
+      return 48;
     }
   }
 
@@ -179,7 +188,7 @@ class Logic {
       average: average,
       complicate: complicate,
     );
-    debugPrint('actorPoints: $actorPoints');
+    // debugPrint('actorPoints: $actorPoints');
 
     final double useCasePoints = _calculateUseCasePoints(
       simpleB: simpleB,
@@ -192,10 +201,10 @@ class Logic {
       averageT: averageT,
       complicateT: complicateT,
     );
-    debugPrint('useCasePoints: $useCasePoints');
+    // debugPrint('useCasePoints: $useCasePoints');
 
     final uucpPoints = useCasePoints + actorPoints;
-    debugPrint('uucpPoints: $uucpPoints');
+    // debugPrint('uucpPoints: $uucpPoints');
 
     final tcfPoints = _calculateTCFPoints(
       distribute: distribute,
@@ -212,7 +221,7 @@ class Logic {
       accessThirdPartySoftware: accessThirdPartySoftware,
       specialTrainingRequire: specialTrainingRequire,
     );
-    debugPrint('tcfPoints: $tcfPoints');
+    // debugPrint('tcfPoints: $tcfPoints');
 
     final efPoints = _calculateEFPoints(
       rupKnowledge: rupKnowledge,
@@ -224,10 +233,23 @@ class Logic {
       useParttimeEmployee: useParttimeEmployee,
       codeLanguageDifficulty: codeLanguageDifficulty,
     );
-    debugPrint('efPoints: $efPoints');
+    // debugPrint('efPoints: $efPoints');
+    // debugPrint(
+    //     'efPoints 2: ${1.4 + (-0.03 * (rupKnowledge * 1.5 + similarAppExperiences * 0.5 + oopExperiences + leaderShip * 0.5 + activeness + requirementStability * 2 + useParttimeEmployee * (-1) + codeLanguageDifficulty * (-1)))}');
+    // debugPrint(
+    //     'efPoints 3: ${(rupKnowledge * 1.5 + similarAppExperiences * 0.5 + oopExperiences + leaderShip * 0.5 + activeness + requirementStability * 2 + useParttimeEmployee * (-1) + codeLanguageDifficulty * (-1))}');
+
+    // debugPrint('rupKnowledge : ${rupKnowledge}');
+    // debugPrint('similarAppExperiences : ${similarAppExperiences * 0.5}');
+    // debugPrint('oopExperiences : ${oopExperiences}');
+    // debugPrint('leaderShip : ${leaderShip * 0.5}');
+    // debugPrint('activeness : ${activeness}');
+    // debugPrint('requirementStability : ${requirementStability * 2}');
+    // debugPrint('useParttimeEmployee : ${useParttimeEmployee * (-1)}');
+    // debugPrint('codeLanguageDifficulty : ${codeLanguageDifficulty * (-1)}');
 
     final aucpPoints = uucpPoints * tcfPoints * efPoints;
-    debugPrint('aucpPoints: $aucpPoints');
+    // debugPrint('aucpPoints: $aucpPoints');
 
     final workTimeInterpolation = _calculateWorkTimeInterpolation(
       rupKnowledge: rupKnowledge,
@@ -239,16 +261,16 @@ class Logic {
       useParttimeEmployee: useParttimeEmployee,
       codeLanguageDifficulty: codeLanguageDifficulty,
     );
-    debugPrint('workTimeInterpolation: $workTimeInterpolation');
+    // debugPrint('workTimeInterpolation: $workTimeInterpolation');
 
     final actualEffort = 10 / 6 * aucpPoints;
-    debugPrint('actualEffort: $actualEffort');
+    // debugPrint('actualEffort: $actualEffort');
 
     final averageSalary = _calculateAverageSalary(
         // salaryDatas: salaryDatas,
         );
-    debugPrint('averageSalary: $averageSalary');
+    // debugPrint('averageSalary: $averageSalary');
 
-    return workTimeInterpolation * actualEffort * averageSalary;
+    return 1.4 * workTimeInterpolation * actualEffort * averageSalary;
   }
 }
