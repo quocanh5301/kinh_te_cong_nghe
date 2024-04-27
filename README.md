@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+*** " THAY DẤU '.' BẰNG DẤU ',' VÍ DỤ 4.5 => 4,5 " ***
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
