@@ -120,10 +120,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final codeLanguageDifficulty = TextEditingController();
 
-  //salary
+  // salary
+  final String salaryHint = 'VND';
   // final salary = TextEditingController();
 
   // final numberEmployee = TextEditingController();
+
+  final averageSalary = TextEditingController();
 
   FutureOr<bool?> _showDialog({
     required BuildContext currentCtx,
@@ -535,6 +538,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: codeLanguageDifficulty,
                 ),
                 const VerticalSpace(16),
+                BasicInputField(
+                  name: 'salary',
+                  textInputType: TextInputType.number,
+                  labelText: 'Mức lương lao động bình quân',
+                  hintText: salaryHint,
+                  validator: FormBuilderValidators.required(
+                      errorText: 'Please fill out this field'),
+                  controller: averageSalary,
+                ),
+                const VerticalSpace(16),
                 SubmitButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -590,6 +603,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               _stringToDouble(useParttimeEmployee.text),
                           codeLanguageDifficulty:
                               _stringToDouble(codeLanguageDifficulty.text),
+                          averageSalary: _stringToDouble(averageSalary.text),
                         )}',
                       );
                     }

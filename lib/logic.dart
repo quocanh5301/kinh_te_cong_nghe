@@ -135,6 +135,7 @@ class Logic {
   static double _calculateAverageSalary(
       // {
       // required List<SalaryData> salaryDatas,}
+
       ) {
     // for (SalaryData data in salaryDatas){
 
@@ -182,6 +183,7 @@ class Logic {
     required double codeLanguageDifficulty,
     //salary
     // required List<SalaryData> salaryDatas,
+    required double averageSalary,
   }) {
     final double actorPoints = _calculateActorsPoints(
       simple: simple,
@@ -233,7 +235,7 @@ class Logic {
       useParttimeEmployee: useParttimeEmployee,
       codeLanguageDifficulty: codeLanguageDifficulty,
     );
-    // debugPrint('efPoints: $efPoints');
+    debugPrint('efPoints: $efPoints');
     // debugPrint(
     //     'efPoints 2: ${1.4 + (-0.03 * (rupKnowledge * 1.5 + similarAppExperiences * 0.5 + oopExperiences + leaderShip * 0.5 + activeness + requirementStability * 2 + useParttimeEmployee * (-1) + codeLanguageDifficulty * (-1)))}');
     // debugPrint(
@@ -249,7 +251,7 @@ class Logic {
     // debugPrint('codeLanguageDifficulty : ${codeLanguageDifficulty * (-1)}');
 
     final aucpPoints = uucpPoints * tcfPoints * efPoints;
-    // debugPrint('aucpPoints: $aucpPoints');
+    debugPrint('aucpPoints: $aucpPoints');
 
     final workTimeInterpolation = _calculateWorkTimeInterpolation(
       rupKnowledge: rupKnowledge,
@@ -261,14 +263,14 @@ class Logic {
       useParttimeEmployee: useParttimeEmployee,
       codeLanguageDifficulty: codeLanguageDifficulty,
     );
-    // debugPrint('workTimeInterpolation: $workTimeInterpolation');
+    debugPrint('workTimeInterpolation: $workTimeInterpolation');
 
     final actualEffort = 10 / 6 * aucpPoints;
-    // debugPrint('actualEffort: $actualEffort');
+    debugPrint('actualEffort: $actualEffort');
 
-    final averageSalary = _calculateAverageSalary(
-        // salaryDatas: salaryDatas,
-        );
+    // final averageSalary = _calculateAverageSalary(
+    //     // salaryDatas: salaryDatas,
+    //     );
     // debugPrint('averageSalary: $averageSalary');
 
     return 1.4 * workTimeInterpolation * actualEffort * averageSalary;
